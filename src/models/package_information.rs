@@ -307,12 +307,13 @@ pub enum ExternalPackageReferenceCategory {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Copy)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[serde(rename_all = "SCREAMING-KEBAB-CASE")]
 pub enum PrimaryPackagePurpose {
     Application,
     Framework,
     Library,
     Container,
+    #[serde(alias = "OPERATING_SYSTEM")]
     OperatingSystem,
     Device,
     Firmware,
