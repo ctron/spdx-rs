@@ -123,9 +123,7 @@ impl FileInformation {
             .iter()
             .find(|&checksum| checksum.algorithm == algorithm);
 
-        checksum.map_or(false, |checksum| {
-            checksum.value.to_ascii_lowercase() == value.to_ascii_lowercase()
-        })
+        checksum.is_some_and(|checksum| checksum.value.eq_ignore_ascii_case(value))
     }
 
     /// Get checksum

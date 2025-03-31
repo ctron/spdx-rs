@@ -74,6 +74,7 @@ pub struct SPDX {
 
     /// Counter for creating SPDXRefs. Is not part of the spec, so don't serialize.
     #[serde(skip)]
+    #[allow(clippy::doc_markdown)]
     pub spdx_ref_counter: i32,
 }
 

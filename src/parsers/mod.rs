@@ -119,7 +119,7 @@ fn spdx_from_atoms(atoms: &[Atom]) -> Result<SPDX, SpdxError> {
             atom,
             &mut file_in_progress,
             &mut file_information,
-            &package_in_progress,
+            package_in_progress.as_ref(),
             &mut relationships,
         );
         process_atom_for_snippets(atom, &mut snippet_information, &mut snippet_in_progress);
@@ -411,7 +411,7 @@ fn process_atom_for_files(
     atom: &Atom,
     mut file_in_progress: &mut Option<FileInformation>,
     files: &mut Vec<FileInformation>,
-    package_in_progress: &Option<PackageInformation>,
+    package_in_progress: Option<&PackageInformation>,
     relationships: &mut HashSet<Relationship>,
 ) {
     match atom {
@@ -595,6 +595,7 @@ fn process_atom_for_relationships(
 }
 
 #[derive(Debug, Default)]
+#[allow(clippy::struct_field_names)]
 struct AnnotationInProgress {
     annotator_in_progress: Option<String>,
     date_in_progress: Option<DateTime<Utc>>,
@@ -947,7 +948,7 @@ This information was found in the COPYING.txt file in the xyz directory.".to_str
             fooc.file_notice,
             Some("Copyright (c) 2001 Aaron Lehmann aaroni@vitelus.com
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the �Software�), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the �Software�), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED �AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.".to_string())
